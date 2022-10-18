@@ -1,0 +1,595 @@
+
+Lab1_LED.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002a0  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .debug_aranges 00000020  00000000  00000000  000002f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  2 .debug_pubnames 0000001b  00000000  00000000  00000314  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   00000472  00000000  00000000  0000032f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 000000fc  00000000  00000000  000007a1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   00000331  00000000  00000000  0000089d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  00000020  00000000  00000000  00000bd0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    000000cc  00000000  00000000  00000bf0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    00000358  00000000  00000000  00000cbc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000060  00000000  00000000  00001014  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 4e 01 	jmp	0x29c	; 0x29c <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+	DDRA |= 0xFF;
+  6c:	8a b3       	in	r24, 0x1a	; 26
+  6e:	8f ef       	ldi	r24, 0xFF	; 255
+  70:	8a bb       	out	0x1a, r24	; 26
+	PORTA &= 0;
+  72:	8b b3       	in	r24, 0x1b	; 27
+  74:	1b ba       	out	0x1b, r1	; 27
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  76:	a9 e1       	ldi	r26, 0x19	; 25
+  78:	b0 e0       	ldi	r27, 0x00	; 0
+		//Example 1
+		PORTA &= 0;
+		PORTA |= 0b11000000;
+		_delay_ms(500);
+		for(int i = 6; i > 0; i--){
+			PORTA ^= 1<<(i-1);
+  7a:	61 e0       	ldi	r22, 0x01	; 1
+  7c:	70 e0       	ldi	r23, 0x00	; 0
+	PORTA &= 0;
+    /* Replace with your application code */
+    while (1) 
+    {
+		//Example 1
+		PORTA &= 0;
+  7e:	8b b3       	in	r24, 0x1b	; 27
+  80:	1b ba       	out	0x1b, r1	; 27
+		PORTA |= 0b11000000;
+  82:	8b b3       	in	r24, 0x1b	; 27
+  84:	80 6c       	ori	r24, 0xC0	; 192
+  86:	8b bb       	out	0x1b, r24	; 27
+  88:	88 e8       	ldi	r24, 0x88	; 136
+  8a:	93 e1       	ldi	r25, 0x13	; 19
+  8c:	fd 01       	movw	r30, r26
+  8e:	31 97       	sbiw	r30, 0x01	; 1
+  90:	f1 f7       	brne	.-4      	; 0x8e <main+0x22>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+  92:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+  94:	d9 f7       	brne	.-10     	; 0x8c <main+0x20>
+  96:	46 e0       	ldi	r20, 0x06	; 6
+  98:	50 e0       	ldi	r21, 0x00	; 0
+		_delay_ms(500);
+		for(int i = 6; i > 0; i--){
+			PORTA ^= 1<<(i-1);
+  9a:	2b b3       	in	r18, 0x1b	; 27
+  9c:	41 50       	subi	r20, 0x01	; 1
+  9e:	50 40       	sbci	r21, 0x00	; 0
+  a0:	cb 01       	movw	r24, r22
+  a2:	04 2e       	mov	r0, r20
+  a4:	02 c0       	rjmp	.+4      	; 0xaa <main+0x3e>
+  a6:	88 0f       	add	r24, r24
+  a8:	99 1f       	adc	r25, r25
+  aa:	0a 94       	dec	r0
+  ac:	e2 f7       	brpl	.-8      	; 0xa6 <main+0x3a>
+  ae:	28 27       	eor	r18, r24
+  b0:	2b bb       	out	0x1b, r18	; 27
+			PORTA ^= 1<<(i+1);
+  b2:	2b b3       	in	r18, 0x1b	; 27
+  b4:	4e 5f       	subi	r20, 0xFE	; 254
+  b6:	5f 4f       	sbci	r21, 0xFF	; 255
+  b8:	cb 01       	movw	r24, r22
+  ba:	04 2e       	mov	r0, r20
+  bc:	02 c0       	rjmp	.+4      	; 0xc2 <main+0x56>
+  be:	88 0f       	add	r24, r24
+  c0:	99 1f       	adc	r25, r25
+  c2:	0a 94       	dec	r0
+  c4:	e2 f7       	brpl	.-8      	; 0xbe <main+0x52>
+  c6:	42 50       	subi	r20, 0x02	; 2
+  c8:	50 40       	sbci	r21, 0x00	; 0
+  ca:	28 27       	eor	r18, r24
+  cc:	2b bb       	out	0x1b, r18	; 27
+  ce:	88 e8       	ldi	r24, 0x88	; 136
+  d0:	93 e1       	ldi	r25, 0x13	; 19
+  d2:	fd 01       	movw	r30, r26
+  d4:	31 97       	sbiw	r30, 0x01	; 1
+  d6:	f1 f7       	brne	.-4      	; 0xd4 <main+0x68>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+  d8:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+  da:	d9 f7       	brne	.-10     	; 0xd2 <main+0x66>
+    {
+		//Example 1
+		PORTA &= 0;
+		PORTA |= 0b11000000;
+		_delay_ms(500);
+		for(int i = 6; i > 0; i--){
+  dc:	41 15       	cp	r20, r1
+  de:	51 05       	cpc	r21, r1
+  e0:	e1 f6       	brne	.-72     	; 0x9a <main+0x2e>
+  e2:	41 e0       	ldi	r20, 0x01	; 1
+  e4:	50 e0       	ldi	r21, 0x00	; 0
+			PORTA ^= 1<<(i+1);
+			_delay_ms(500);
+		}
+		
+		for(int i = 1; i < 7; i++){
+			PORTA ^= 1<<(i-1);
+  e6:	2b b3       	in	r18, 0x1b	; 27
+  e8:	41 50       	subi	r20, 0x01	; 1
+  ea:	50 40       	sbci	r21, 0x00	; 0
+  ec:	cb 01       	movw	r24, r22
+  ee:	04 2e       	mov	r0, r20
+  f0:	02 c0       	rjmp	.+4      	; 0xf6 <main+0x8a>
+  f2:	88 0f       	add	r24, r24
+  f4:	99 1f       	adc	r25, r25
+  f6:	0a 94       	dec	r0
+  f8:	e2 f7       	brpl	.-8      	; 0xf2 <main+0x86>
+  fa:	28 27       	eor	r18, r24
+  fc:	2b bb       	out	0x1b, r18	; 27
+			PORTA ^= 1<<(i+1);
+  fe:	2b b3       	in	r18, 0x1b	; 27
+ 100:	4e 5f       	subi	r20, 0xFE	; 254
+ 102:	5f 4f       	sbci	r21, 0xFF	; 255
+ 104:	cb 01       	movw	r24, r22
+ 106:	04 2e       	mov	r0, r20
+ 108:	02 c0       	rjmp	.+4      	; 0x10e <main+0xa2>
+ 10a:	88 0f       	add	r24, r24
+ 10c:	99 1f       	adc	r25, r25
+ 10e:	0a 94       	dec	r0
+ 110:	e2 f7       	brpl	.-8      	; 0x10a <main+0x9e>
+ 112:	28 27       	eor	r18, r24
+ 114:	2b bb       	out	0x1b, r18	; 27
+ 116:	88 e8       	ldi	r24, 0x88	; 136
+ 118:	93 e1       	ldi	r25, 0x13	; 19
+ 11a:	fd 01       	movw	r30, r26
+ 11c:	31 97       	sbiw	r30, 0x01	; 1
+ 11e:	f1 f7       	brne	.-4      	; 0x11c <main+0xb0>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 120:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 122:	d9 f7       	brne	.-10     	; 0x11a <main+0xae>
+			PORTA ^= 1<<(i-1);
+			PORTA ^= 1<<(i+1);
+			_delay_ms(500);
+		}
+		
+		for(int i = 1; i < 7; i++){
+ 124:	47 30       	cpi	r20, 0x07	; 7
+ 126:	51 05       	cpc	r21, r1
+ 128:	f1 f6       	brne	.-68     	; 0xe6 <main+0x7a>
+			PORTA ^= 1<<(i+1);
+			_delay_ms(500);
+		}
+		
+		//Example 2
+		PORTA &= 0;
+ 12a:	8b b3       	in	r24, 0x1b	; 27
+ 12c:	1b ba       	out	0x1b, r1	; 27
+ 12e:	47 e0       	ldi	r20, 0x07	; 7
+ 130:	50 e0       	ldi	r21, 0x00	; 0
+		for(int i = 7; i > 3; i--){
+			PORTA |= 1<<i;
+ 132:	2b b3       	in	r18, 0x1b	; 27
+ 134:	cb 01       	movw	r24, r22
+ 136:	04 2e       	mov	r0, r20
+ 138:	02 c0       	rjmp	.+4      	; 0x13e <main+0xd2>
+ 13a:	88 0f       	add	r24, r24
+ 13c:	99 1f       	adc	r25, r25
+ 13e:	0a 94       	dec	r0
+ 140:	e2 f7       	brpl	.-8      	; 0x13a <main+0xce>
+ 142:	28 2b       	or	r18, r24
+ 144:	2b bb       	out	0x1b, r18	; 27
+ 146:	80 e1       	ldi	r24, 0x10	; 16
+ 148:	97 e2       	ldi	r25, 0x27	; 39
+ 14a:	fd 01       	movw	r30, r26
+ 14c:	31 97       	sbiw	r30, 0x01	; 1
+ 14e:	f1 f7       	brne	.-4      	; 0x14c <main+0xe0>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 150:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 152:	d9 f7       	brne	.-10     	; 0x14a <main+0xde>
+			_delay_ms(500);
+		}
+		
+		//Example 2
+		PORTA &= 0;
+		for(int i = 7; i > 3; i--){
+ 154:	41 50       	subi	r20, 0x01	; 1
+ 156:	50 40       	sbci	r21, 0x00	; 0
+ 158:	43 30       	cpi	r20, 0x03	; 3
+ 15a:	51 05       	cpc	r21, r1
+ 15c:	51 f7       	brne	.-44     	; 0x132 <main+0xc6>
+ 15e:	44 e0       	ldi	r20, 0x04	; 4
+ 160:	50 e0       	ldi	r21, 0x00	; 0
+			PORTA |= 1<<i;
+			_delay_ms(1000);
+		}
+		
+		for(int i = 4; i < 7; i++){
+			PORTA &= ~(1<<i);
+ 162:	2b b3       	in	r18, 0x1b	; 27
+ 164:	cb 01       	movw	r24, r22
+ 166:	04 2e       	mov	r0, r20
+ 168:	02 c0       	rjmp	.+4      	; 0x16e <main+0x102>
+ 16a:	88 0f       	add	r24, r24
+ 16c:	99 1f       	adc	r25, r25
+ 16e:	0a 94       	dec	r0
+ 170:	e2 f7       	brpl	.-8      	; 0x16a <main+0xfe>
+ 172:	80 95       	com	r24
+ 174:	82 23       	and	r24, r18
+ 176:	8b bb       	out	0x1b, r24	; 27
+ 178:	80 e1       	ldi	r24, 0x10	; 16
+ 17a:	97 e2       	ldi	r25, 0x27	; 39
+ 17c:	fd 01       	movw	r30, r26
+ 17e:	31 97       	sbiw	r30, 0x01	; 1
+ 180:	f1 f7       	brne	.-4      	; 0x17e <main+0x112>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 182:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 184:	d9 f7       	brne	.-10     	; 0x17c <main+0x110>
+		for(int i = 7; i > 3; i--){
+			PORTA |= 1<<i;
+			_delay_ms(1000);
+		}
+		
+		for(int i = 4; i < 7; i++){
+ 186:	4f 5f       	subi	r20, 0xFF	; 255
+ 188:	5f 4f       	sbci	r21, 0xFF	; 255
+ 18a:	47 30       	cpi	r20, 0x07	; 7
+ 18c:	51 05       	cpc	r21, r1
+ 18e:	49 f7       	brne	.-46     	; 0x162 <main+0xf6>
+			PORTA &= ~(1<<i);
+			_delay_ms(1000);
+		}
+		
+		//Example 3
+		PORTA &= 0;
+ 190:	8b b3       	in	r24, 0x1b	; 27
+ 192:	1b ba       	out	0x1b, r1	; 27
+ 194:	47 e0       	ldi	r20, 0x07	; 7
+ 196:	50 e0       	ldi	r21, 0x00	; 0
+		for(int i = 7; i >= 0;i--){
+			PORTA |= 1<<i;
+ 198:	2b b3       	in	r18, 0x1b	; 27
+ 19a:	cb 01       	movw	r24, r22
+ 19c:	04 2e       	mov	r0, r20
+ 19e:	02 c0       	rjmp	.+4      	; 0x1a4 <main+0x138>
+ 1a0:	88 0f       	add	r24, r24
+ 1a2:	99 1f       	adc	r25, r25
+ 1a4:	0a 94       	dec	r0
+ 1a6:	e2 f7       	brpl	.-8      	; 0x1a0 <main+0x134>
+ 1a8:	28 2b       	or	r18, r24
+ 1aa:	2b bb       	out	0x1b, r18	; 27
+ 1ac:	80 e1       	ldi	r24, 0x10	; 16
+ 1ae:	97 e2       	ldi	r25, 0x27	; 39
+ 1b0:	fd 01       	movw	r30, r26
+ 1b2:	31 97       	sbiw	r30, 0x01	; 1
+ 1b4:	f1 f7       	brne	.-4      	; 0x1b2 <main+0x146>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1b6:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1b8:	d9 f7       	brne	.-10     	; 0x1b0 <main+0x144>
+			_delay_ms(1000);
+		}
+		
+		//Example 3
+		PORTA &= 0;
+		for(int i = 7; i >= 0;i--){
+ 1ba:	41 50       	subi	r20, 0x01	; 1
+ 1bc:	50 40       	sbci	r21, 0x00	; 0
+ 1be:	8f ef       	ldi	r24, 0xFF	; 255
+ 1c0:	4f 3f       	cpi	r20, 0xFF	; 255
+ 1c2:	58 07       	cpc	r21, r24
+ 1c4:	49 f7       	brne	.-46     	; 0x198 <main+0x12c>
+			_delay_ms(1000);
+		}
+		
+		//Example 4
+		
+		PORTA &= 0;
+ 1c6:	8b b3       	in	r24, 0x1b	; 27
+ 1c8:	1b ba       	out	0x1b, r1	; 27
+ 1ca:	43 e0       	ldi	r20, 0x03	; 3
+ 1cc:	50 e0       	ldi	r21, 0x00	; 0
+		for(int i = 3; i >= 0; i--){
+			PORTA |= 1<<i;
+ 1ce:	2b b3       	in	r18, 0x1b	; 27
+ 1d0:	cb 01       	movw	r24, r22
+ 1d2:	04 2e       	mov	r0, r20
+ 1d4:	02 c0       	rjmp	.+4      	; 0x1da <main+0x16e>
+ 1d6:	88 0f       	add	r24, r24
+ 1d8:	99 1f       	adc	r25, r25
+ 1da:	0a 94       	dec	r0
+ 1dc:	e2 f7       	brpl	.-8      	; 0x1d6 <main+0x16a>
+ 1de:	28 2b       	or	r18, r24
+ 1e0:	2b bb       	out	0x1b, r18	; 27
+ 1e2:	80 e1       	ldi	r24, 0x10	; 16
+ 1e4:	97 e2       	ldi	r25, 0x27	; 39
+ 1e6:	fd 01       	movw	r30, r26
+ 1e8:	31 97       	sbiw	r30, 0x01	; 1
+ 1ea:	f1 f7       	brne	.-4      	; 0x1e8 <main+0x17c>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1ec:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1ee:	d9 f7       	brne	.-10     	; 0x1e6 <main+0x17a>
+		}
+		
+		//Example 4
+		
+		PORTA &= 0;
+		for(int i = 3; i >= 0; i--){
+ 1f0:	41 50       	subi	r20, 0x01	; 1
+ 1f2:	50 40       	sbci	r21, 0x00	; 0
+ 1f4:	8f ef       	ldi	r24, 0xFF	; 255
+ 1f6:	4f 3f       	cpi	r20, 0xFF	; 255
+ 1f8:	58 07       	cpc	r21, r24
+ 1fa:	49 f7       	brne	.-46     	; 0x1ce <main+0x162>
+			PORTA |= 1<<i;
+			_delay_ms(1000);
+		}
+		
+		PORTA &= ~0b00001111;
+ 1fc:	8b b3       	in	r24, 0x1b	; 27
+ 1fe:	80 7f       	andi	r24, 0xF0	; 240
+ 200:	8b bb       	out	0x1b, r24	; 27
+ 202:	44 e0       	ldi	r20, 0x04	; 4
+ 204:	50 e0       	ldi	r21, 0x00	; 0
+		for(int i = 4; i<8; i++){
+			PORTA |= 1<<i;
+ 206:	2b b3       	in	r18, 0x1b	; 27
+ 208:	cb 01       	movw	r24, r22
+ 20a:	04 2e       	mov	r0, r20
+ 20c:	02 c0       	rjmp	.+4      	; 0x212 <main+0x1a6>
+ 20e:	88 0f       	add	r24, r24
+ 210:	99 1f       	adc	r25, r25
+ 212:	0a 94       	dec	r0
+ 214:	e2 f7       	brpl	.-8      	; 0x20e <main+0x1a2>
+ 216:	28 2b       	or	r18, r24
+ 218:	2b bb       	out	0x1b, r18	; 27
+ 21a:	80 e1       	ldi	r24, 0x10	; 16
+ 21c:	97 e2       	ldi	r25, 0x27	; 39
+ 21e:	fd 01       	movw	r30, r26
+ 220:	31 97       	sbiw	r30, 0x01	; 1
+ 222:	f1 f7       	brne	.-4      	; 0x220 <main+0x1b4>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 224:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 226:	d9 f7       	brne	.-10     	; 0x21e <main+0x1b2>
+			PORTA |= 1<<i;
+			_delay_ms(1000);
+		}
+		
+		PORTA &= ~0b00001111;
+		for(int i = 4; i<8; i++){
+ 228:	4f 5f       	subi	r20, 0xFF	; 255
+ 22a:	5f 4f       	sbci	r21, 0xFF	; 255
+ 22c:	48 30       	cpi	r20, 0x08	; 8
+ 22e:	51 05       	cpc	r21, r1
+ 230:	51 f7       	brne	.-44     	; 0x206 <main+0x19a>
+			PORTA |= 1<<i;
+			_delay_ms(1000);
+		}
+		
+		//Example 5
+		PORTA &= 0;
+ 232:	8b b3       	in	r24, 0x1b	; 27
+ 234:	1b ba       	out	0x1b, r1	; 27
+ 236:	47 e0       	ldi	r20, 0x07	; 7
+ 238:	50 e0       	ldi	r21, 0x00	; 0
+		for(int i = 7; i > 3; i--){
+			PORTA |= 1<<i;
+ 23a:	2b b3       	in	r18, 0x1b	; 27
+ 23c:	cb 01       	movw	r24, r22
+ 23e:	04 2e       	mov	r0, r20
+ 240:	02 c0       	rjmp	.+4      	; 0x246 <main+0x1da>
+ 242:	88 0f       	add	r24, r24
+ 244:	99 1f       	adc	r25, r25
+ 246:	0a 94       	dec	r0
+ 248:	e2 f7       	brpl	.-8      	; 0x242 <main+0x1d6>
+ 24a:	28 2b       	or	r18, r24
+ 24c:	2b bb       	out	0x1b, r18	; 27
+ 24e:	80 e1       	ldi	r24, 0x10	; 16
+ 250:	97 e2       	ldi	r25, 0x27	; 39
+ 252:	fd 01       	movw	r30, r26
+ 254:	31 97       	sbiw	r30, 0x01	; 1
+ 256:	f1 f7       	brne	.-4      	; 0x254 <main+0x1e8>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 258:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 25a:	d9 f7       	brne	.-10     	; 0x252 <main+0x1e6>
+			_delay_ms(1000);
+		}
+		
+		//Example 5
+		PORTA &= 0;
+		for(int i = 7; i > 3; i--){
+ 25c:	41 50       	subi	r20, 0x01	; 1
+ 25e:	50 40       	sbci	r21, 0x00	; 0
+ 260:	43 30       	cpi	r20, 0x03	; 3
+ 262:	51 05       	cpc	r21, r1
+ 264:	51 f7       	brne	.-44     	; 0x23a <main+0x1ce>
+			PORTA |= 1<<i;
+			_delay_ms(1000);
+		}
+		PORTA &= 0;
+ 266:	8b b3       	in	r24, 0x1b	; 27
+ 268:	1b ba       	out	0x1b, r1	; 27
+ 26a:	40 e0       	ldi	r20, 0x00	; 0
+ 26c:	50 e0       	ldi	r21, 0x00	; 0
+		for(int i = 0; i < 4; i++){
+			PORTA |= 1<<i;
+ 26e:	2b b3       	in	r18, 0x1b	; 27
+ 270:	cb 01       	movw	r24, r22
+ 272:	04 2e       	mov	r0, r20
+ 274:	02 c0       	rjmp	.+4      	; 0x27a <main+0x20e>
+ 276:	88 0f       	add	r24, r24
+ 278:	99 1f       	adc	r25, r25
+ 27a:	0a 94       	dec	r0
+ 27c:	e2 f7       	brpl	.-8      	; 0x276 <main+0x20a>
+ 27e:	28 2b       	or	r18, r24
+ 280:	2b bb       	out	0x1b, r18	; 27
+ 282:	80 e1       	ldi	r24, 0x10	; 16
+ 284:	97 e2       	ldi	r25, 0x27	; 39
+ 286:	fd 01       	movw	r30, r26
+ 288:	31 97       	sbiw	r30, 0x01	; 1
+ 28a:	f1 f7       	brne	.-4      	; 0x288 <main+0x21c>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 28c:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 28e:	d9 f7       	brne	.-10     	; 0x286 <main+0x21a>
+		for(int i = 7; i > 3; i--){
+			PORTA |= 1<<i;
+			_delay_ms(1000);
+		}
+		PORTA &= 0;
+		for(int i = 0; i < 4; i++){
+ 290:	4f 5f       	subi	r20, 0xFF	; 255
+ 292:	5f 4f       	sbci	r21, 0xFF	; 255
+ 294:	44 30       	cpi	r20, 0x04	; 4
+ 296:	51 05       	cpc	r21, r1
+ 298:	51 f7       	brne	.-44     	; 0x26e <main+0x202>
+ 29a:	f1 ce       	rjmp	.-542    	; 0x7e <main+0x12>
+
+0000029c <_exit>:
+ 29c:	f8 94       	cli
+
+0000029e <__stop_program>:
+ 29e:	ff cf       	rjmp	.-2      	; 0x29e <__stop_program>
