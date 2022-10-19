@@ -1,0 +1,13 @@
+#Build Results
+*.o
+*.d
+*.eep
+*.elf
+*.hex
+*.map
+*.srec
+
+#User Specific Files
+*.atsuo
+*.aws
+*.aps
