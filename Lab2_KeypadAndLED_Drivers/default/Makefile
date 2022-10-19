@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for the project First
+# Makefile for the project Lab2
 ###############################################################################
 
 ## General Flags
-PROJECT = First
-MCU = atmega32
-TARGET = First.elf
+PROJECT = Lab2
+MCU = atmega128
+TARGET = Lab2.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=First.map
+LDFLAGS +=  -Wl,-Map=Lab2.map
 
 
 ## Intel Hex file production flags
@@ -37,14 +37,14 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = First.o keyboard.o led.o 
+OBJECTS = main.o keyboard.o led.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) First.hex First.eep First.lss## Compile
-First.o: ../First.c
+all: $(TARGET) Lab2.hex Lab2.eep Lab2.lss## Compile
+main.o: ../main.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 keyboard.o: ../keyboard.c
@@ -69,7 +69,7 @@ $(TARGET): $(OBJECTS)
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) First.elf dep/* First.hex First.eep First.lss First.map
+	-rm -rf $(OBJECTS) Lab2.elf dep/* Lab2.hex Lab2.eep Lab2.lss Lab2.map
 
 
 ## Other dependencies
