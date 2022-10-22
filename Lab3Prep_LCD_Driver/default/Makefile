@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for the project Lab2
+# Makefile for the project Lab3Prep
 ###############################################################################
 
 ## General Flags
-PROJECT = Lab2
+PROJECT = Lab3Prep
 MCU = atmega32
-TARGET = Lab2.elf
+TARGET = Lab3Prep.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=Lab2.map
+LDFLAGS +=  -Wl,-Map=Lab3Prep.map
 
 
 ## Intel Hex file production flags
@@ -37,20 +37,14 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = main.o led.o keyboard.o 
+OBJECTS = main.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) Lab2.hex Lab2.eep Lab2.lss## Compile
+all: $(TARGET) Lab3Prep.hex Lab3Prep.eep Lab3Prep.lss## Compile
 main.o: ../main.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
-led.o: ../led.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
-keyboard.o: ../keyboard.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
@@ -69,7 +63,7 @@ $(TARGET): $(OBJECTS)
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) Lab2.elf dep/* Lab2.hex Lab2.eep Lab2.lss Lab2.map
+	-rm -rf $(OBJECTS) Lab3Prep.elf dep/* Lab3Prep.hex Lab3Prep.eep Lab3Prep.lss Lab3Prep.map
 
 
 ## Other dependencies
