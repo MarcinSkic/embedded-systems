@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for the project Lab2
+# Makefile for the project Lab4Prep
 ###############################################################################
 
 ## General Flags
-PROJECT = Lab2
+PROJECT = Lab4Prep
 MCU = atmega32
-TARGET = Lab2.elf
+TARGET = Lab4Prep.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=Lab2.map
+LDFLAGS +=  -Wl,-Map=Lab4Prep.map
 
 
 ## Intel Hex file production flags
@@ -43,7 +43,7 @@ OBJECTS = main.o
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) Lab2.hex Lab2.eep Lab2.lss## Compile
+all: $(TARGET) Lab4Prep.hex Lab4Prep.eep Lab4Prep.lss## Compile
 main.o: ../main.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
@@ -63,7 +63,7 @@ $(TARGET): $(OBJECTS)
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) Lab2.elf dep/* Lab2.hex Lab2.eep Lab2.lss Lab2.map
+	-rm -rf $(OBJECTS) Lab4Prep.elf dep/* Lab4Prep.hex Lab4Prep.eep Lab4Prep.lss Lab4Prep.map
 
 
 ## Other dependencies
