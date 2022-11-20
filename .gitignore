@@ -12,3 +12,6 @@
 *.atsuo
 *.aws
 *.aps
+
+#Other
+*.simu
