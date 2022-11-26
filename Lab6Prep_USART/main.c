@@ -20,7 +20,8 @@ void USART_Transmit(char data){
 }
 
 char USART_Receive(){
-	while(!(UCSRA & (1<<RXC)));	//Dopoki nie ma nieodczytanych danych (aka. nie otrzymalismy danych) czekaj
+	while(!(UCSRA & (1<<RXC)));//Dopoki nie ma nieodczytanych danych (aka. nie otrzymalismy danych) czekaj
+	
 	return (UDR);	//Zwroc otrzymane dane	(odczytujemy dane co resetuje flage)
 }
 
