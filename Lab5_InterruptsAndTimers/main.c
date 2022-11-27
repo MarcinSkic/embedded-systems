@@ -14,11 +14,69 @@
 volatile int timerMax = 10;
 volatile int timeCounter = 0;
 
-ISR (TIMER0_COMP_vect){
+volatile int cycles = 0;
+
+
+void temp(){
+	cycles++;
+	if(cycles >= 10){
+		cycles = 0;
+		PORTC ^= 0x01;
+	}
+	TCNT0 = 157;
+	TIFR |= 1<<TOV0;
+}
+
+ISR (TIMER0_OVF_vect){
 	timeCounter++;
 	if(timeCounter >= timerMax){
 		timeCounter = 0;
 		PORTC ^= 0x01;
+	}
+}
+
+ISR (TIMER0_COMP_vect){
+	
+}
+
+void wait_100ms(){
+	while(!(TIFR & (1<<TOV0)));
+	TCNT0 = 157;
+
+	TIFR |= 1<<TOV0;
+}
+
+void wait_1sec(){
+	for(int i = 0; i < 10; i++){
+		wait_100ms();
+	}
+	PORTC ^= 0x01;
+}
+
+void ex1(){
+	DDRC |= 0x01;
+
+	TCCR0 |= (1 <<CS02) | (1 << CS00);
+	TCNT0 = 157;
+
+	while(1){
+		wait_1sec();
+	}
+}
+
+
+
+void ex2(){
+	DDRC |= 0x01;
+
+	TCCR0 |= (1 << CS02) | (1 << CS00);
+	TCNT0 = 157;
+
+	TIMSK |= 1<<TOIE0;
+	sei();
+
+	while(1){
+		asm("nop");
 	}
 }
 
@@ -73,6 +131,7 @@ ISR (INT0_vect){
 
 int main(void)
 {
+	
 	//Diody
 	DDRC = 0xff;
 	PORTC = 0;
@@ -86,17 +145,34 @@ int main(void)
 	PORTD = 0xFF;
 	
 	TCCR0 |= (1 << CS00) | (1 << CS02);	//Prescaler 1024
-	TCCR0 |= 1<<WGM01;	//Tryb CTC
-	OCR0 = 98;	//Wartosc do porownania przez CTC
+	TCNT0 = 157;
 	
-	TIMSK |= 1<<OCIE0;	//Zezwolenie na aktywowanie przerwania przez CTC0
+	TIMSK |= 1<<TOIE0;	//Zezwolenie na aktywowanie przerwania przez CTC0
 	
 	GIMSK |= 1<<INT0;	//W��czenie przerwania na INT0
 	MCUCR |= 1<<ISC01 | 1<<ISC00; //Ustawienie reakcji przerwania INT0 na negacj� stanu
 	
 	sei();	//Wlaczenie systemu przerwan
-    
-    while (1) 
-    {
-    }
+	
+    while(1){
+		
+		//ZAPISUJ TO DO VOLATILE
+		int klawisz = getKey();
+
+		if(klawisz != 0){
+			if(klawisz < 15) {
+				timerMax = klawisz;
+			} else if (klawisz == 15){
+				TIMSK &= ~(1<<TOIE0);
+			} else if (klawisz == 16){
+				TIMSK |= 1<<TOIE0;
+			}
+	
+			PORTA = 0x0F;
+		}
+	
+		
+	}
+    //ex1();
+	//ex2();
 }
