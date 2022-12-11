@@ -1,7 +1,7 @@
 <!DOCTYPE CrossStudio_Session_File>
 <session>
  <Bookmarks/>
- <Breakpoints groups="Breakpoints" active_group="Breakpoints"/>
+ <Breakpoints groups="" active_group="Breakpoints"/>
  <ExecutionProfileWindow/>
  <FrameBufferWindow>
   <FrameBufferWindow bufferHeight="-1" addressSpace="" addressText="" bufferWidth="-1"/>
@@ -11,9 +11,8 @@
  <Memory3/>
  <Memory4/>
  <Project>
-  <ProjectSessionItem path="Skic_Marcin_Lab_8"/>
-  <ProjectSessionItem path="Skic_Marcin_Lab_8;Skic_Marcin_Lab_8"/>
-  <ProjectSessionItem path="Skic_Marcin_Lab_8;Skic_Marcin_Lab_8;Source Files"/>
+  <ProjectSessionItem path="Lab9Prep"/>
+  <ProjectSessionItem path="Lab9Prep;Lab9Prep"/>
  </Project>
  <Register1/>
  <Register2/>
@@ -39,7 +38,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="19" y="11" useTextEdit="1" path="main.c" left="0" selected="1" top="28" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="5" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
  </Files>
- <ARMCrossStudioWindow activeProject="Skic_Marcin_Lab_8" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="ARM Flash Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="388479"/>
+ <ARMCrossStudioWindow activeProject="Lab9Prep" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="ARM RAM Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="388479"/>
 </session>

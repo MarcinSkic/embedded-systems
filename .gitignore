@@ -9,6 +9,7 @@
 *.lss
 #Build from crossworks
 *.ld
+*.ind
 
 #User Specific Files
 *.atsuo
