@@ -1,0 +1,20 @@
+#Build Results
+*.o
+*.d
+*.eep
+*.elf
+*.hex
+*.map
+*.srec
+*.lss
+#Build from crossworks
+*.ld
+*.ind
+
+#User Specific Files
+*.atsuo
+*.aws
+*.aps
+
+#Other
+*.simu
