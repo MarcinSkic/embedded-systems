@@ -167,7 +167,7 @@ void Backlight(unsigned char state);
 void WriteSpiCommand(unsigned int data); 
 void WriteSpiData(unsigned int data); 
 void InitLCD(void); 
-void LCDWrite130x130bmp(void); 
+void LCDWrite130x130bmp(unsigned char bmp); 
 void LCDClearScreen(void); 
 void LCDSetPixel(int x, int y, int color); 
 void LCDSetLine(int x1, int y1, int x2, int y2, int color); 
