@@ -1,0 +1,31 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="Lab9" target="8" version="2">
+  <project Name="Lab9">
+    <configuration Name="Common" Target="AT91SAM7X256" arm_architecture="v4T" arm_core_type="ARM7TDMI" arm_simulator_memory_simulation_filename="$(PackagesDir)/targets/Atmel_AT91SAM7/AT91SAM7SimulatorMemory.dll" arm_simulator_memory_simulation_parameter="0x40000;0x10000" arm_target_debug_interface_type="ARM7TDI" arm_target_loader_parameter="18432000" gcc_entry_point="reset_handler" linker_memory_map_file="$(PackagesDir)/targets/Atmel_AT91SAM7/AT91SAM7X256_MemoryMap.xml" oscillator_frequency="18.432MHz" project_directory="" project_type="Executable" property_groups_file_path="$(PackagesDir)/targets/Atmel_AT91SAM7/propertyGroups.xml"/>
+    <configuration Name="RAM" Placement="RAM" linker_section_placement_file="$(StudioDir)/targets/sram_placement.xml" target_reset_script="RAMReset()"/>
+    <configuration Name="Flash" Placement="Flash" arm_target_flash_loader_file_path="$(PackagesDir)/targets/Atmel_AT91SAM7/Release/Loader_rpc.elf" arm_target_flash_loader_type="LIBMEM RPC Loader" linker_section_placement_file="$(StudioDir)/targets/flash_placement.xml" target_reset_script="FLASHReset()"/>
+    <folder Name="System Files">
+      <file file_name="$(PackagesDir)/targets/Atmel_AT91SAM7/AT91SAM7_Target.js">
+        <configuration Name="Common" file_type="Reset Script"/>
+      </file>
+      <file file_name="$(StudioDir)/source/crt0.s"/>
+      <file file_name="$(PackagesDir)/targets/Atmel_AT91SAM7/AT91SAM7_Startup.s"/>
+      <file file_name="$(PackagesDir)/targets/Atmel_AT91SAM7/AIC.c"/>
+      <file file_name="$(PackagesDir)/targets/Atmel_AT91SAM7/AIC_irq_handler.s"/>
+      <file file_name="$(PackagesDir)/targets/Atmel_AT91SAM7/ctl_at91sam7.c"/>
+    </folder>
+    <folder Name="Source Files" file_name="">
+      <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc"/>
+      <file file_name="main.c"/>
+      <file file_name="fonts.c"/>
+      <file file_name="pcf8833u8_lcd.c"/>
+    </folder>
+  </project>
+  <configuration Name="ARM RAM Debug" inherited_configurations="ARM;RAM;Debug"/>
+  <configuration Name="ARM" Platform="ARM" arm_instruction_set="ARM" arm_library_instruction_set="ARM" c_preprocessor_definitions="__ARM" hidden="Yes"/>
+  <configuration Name="RAM" c_preprocessor_definitions="__RAM_BUILD" hidden="Yes"/>
+  <configuration Name="Debug" c_preprocessor_definitions="DEBUG" gcc_debugging_level="Level 2" gcc_optimization_level="None" hidden="Yes"/>
+  <configuration Name="ARM Flash Release" inherited_configurations="ARM;Flash;Release"/>
+  <configuration Name="Flash" c_preprocessor_definitions="__FLASH_BUILD" hidden="Yes"/>
+  <configuration Name="Release" c_preprocessor_definitions="NDEBUG" gcc_debugging_level="Level 1" gcc_optimization_level="Level 1" hidden="Yes"/>
+</solution>
