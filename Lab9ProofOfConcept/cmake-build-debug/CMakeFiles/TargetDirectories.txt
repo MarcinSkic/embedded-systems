@@ -1,0 +1,3 @@
+E:/5 Semestr/repos/embedded-systems/Lab9ProofOfConcept/cmake-build-debug/CMakeFiles/Lab9ProofOfConcept.dir
+E:/5 Semestr/repos/embedded-systems/Lab9ProofOfConcept/cmake-build-debug/CMakeFiles/edit_cache.dir
+E:/5 Semestr/repos/embedded-systems/Lab9ProofOfConcept/cmake-build-debug/CMakeFiles/rebuild_cache.dir
