@@ -1,6 +1,5 @@
 #include <targets\AT91SAM7.h>
 #include "pcf8833u8_lcd.h"
-#include "bmp.h"
 #include "fonts.h"
 #include "math.h"
 
@@ -178,7 +177,7 @@ LCDSettings();
 }
 
 
-void LCDWrite130x130bmp(void) {
+void LCDWrite130x130bmp(unsigned char bmp) {
 	  // Display OFF
 	  WriteSpiCommand(DISPLAYOFF);
 

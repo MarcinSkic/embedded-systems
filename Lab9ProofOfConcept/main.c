@@ -6,12 +6,21 @@
 #define jDown 0x00004000;
 #define jRight 0x00008000;
 
-enum menu{Home = 0b00000,Author = 0b00001,Figures=0b00010,Circle=0b10000,Square=0b10001,Triangle=0b10010,Trapeze=0b10011,Pictures=0b00011,Pic1=0b11000,Pic2=0b11001,TextAndPicture=0b00100};
+enum menu{Home = 0b00000,Author = 0b00001,Figures=0b00010,Circle=0b10001,Square=0b10010,Triangle=0b10011,Trapeze=0b10100,Pictures=0b00011,Pic1=0b11001,Pic2=0b11010,TextAndPicture=0b00100};
 
 enum menu currentMenu = Home;
-int cursorPosition = 0;
+int cursorPosition = 1;
 int submenusAmount;
 int textBarWidth = 30;
+
+
+void delay(int ms){
+    for(int i = 0; i < ms; i++){
+        for(int x = 0; x < 3000; x++){
+            __asm__("NOP");
+        }
+    }
+}
 
 void loadMenu(enum menu menu){
   //LCDClearScreen();
@@ -61,7 +70,7 @@ void loadMenu(enum menu menu){
 
   }
 
-  cursorPosition = 0;
+  cursorPosition = 1;
   currentMenu = menu;
 }
 
@@ -76,8 +85,8 @@ void CursorUp(){
   int previousCursorPosition = cursorPosition;
   cursorPosition--;
 
-  if(cursorPosition < 0){
-    cursorPosition = 0;
+  if(cursorPosition < 1){
+    cursorPosition = submenusAmount;
   }
 
   UpdateBarSelect(previousCursorPosition);
@@ -89,8 +98,8 @@ void CursorDown(){
   int previousCursorPosition = cursorPosition;
   cursorPosition++;
 
-  if(cursorPosition == submenusAmount){
-    cursorPosition = 0;
+  if(cursorPosition+1 == submenusAmount){
+    cursorPosition = 1;
   }
 
   UpdateBarSelect(previousCursorPosition);
@@ -112,30 +121,14 @@ int main(){
 
     char option;
 
-  loadMenu(Figures);
-
-  printf("%d",currentMenu<<3);
-
-
-
-    /*while(1){
-      printf("Podaj swoj wybor: ");
-      option = getchar();
-      switch (option) {
-        case 1:
-          CursorUp();
-          break;
-        case 2:
-            Enter();
-          break;
-        case 3:
-          CursorDown();
-          break;
-        case 4:
-          Back();
-          break;
-      }
-    }*/
+  loadMenu(Home);
+    Enter();
+    getchar();
+    Back();
+    CursorDown();
+    Enter();
+    CursorUp();
+    Enter();
 
   return 0;
 }

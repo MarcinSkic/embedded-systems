@@ -1,10 +1,10 @@
-C:\Users\marci\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Users/marci/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/bin/ninja/win/ninja.exe -G Ninja -S "E:\5 Semestr\repos\embedded-systems\Lab9ProofOfConcept" -B "E:\5 Semestr\repos\embedded-systems\Lab9ProofOfConcept\cmake-build-debug"
--- The C compiler identification is GNU 11.2.0
+/home/marcinskic/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/marcinskic/repos/embedded-systems/Lab9ProofOfConcept -B /home/marcinskic/repos/embedded-systems/Lab9ProofOfConcept/cmake-build-debug
+-- The C compiler identification is GNU 9.4.0
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
--- Check for working C compiler: C:/Users/marci/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/bin/mingw/bin/gcc.exe - skipped
+-- Check for working C compiler: /usr/bin/cc - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: E:/5 Semestr/repos/embedded-systems/Lab9ProofOfConcept/cmake-build-debug
+-- Build files have been written to: /home/marcinskic/repos/embedded-systems/Lab9ProofOfConcept/cmake-build-debug
