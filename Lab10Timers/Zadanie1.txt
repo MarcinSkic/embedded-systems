@@ -1,0 +1,10 @@
+Najdłuższy możliwy okres między inkrementacją PCINT ogranicza pojemność rejestru CPIV która wynosi 2^20 = 1 048 575, bo przy jego przepełnieniu następuje inkrementacja PCINT
+MCK = 16MHz
+CPIV = 1 048 575
+PERIOD = ?
+PRESCALER = 16
+
+PERIOD = 1 048 575 * 16 / 16 000 000 Hz
+PERIOD = 1,048575s
+
+Najdłuższy możliwy okres to 1,048575s

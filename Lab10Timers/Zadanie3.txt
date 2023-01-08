@@ -1,0 +1,10 @@
+Najniższa częstotliwość możliwa do odliczenia przez TC0 przy MCK = 128Hz
+MCK = 128MHz
+RC = 65535
+FREQ= ?
+PRESCALER = 1024 (największy możliwy, żeby częstotliwość była jak najmniejsza)
+
+FREQ = 128 000 000 Hz / 65535 * 1024
+FREQ = 1,907Hz
+
+Najmniejsza częstotliwość (przybliżona): 1.907Hz

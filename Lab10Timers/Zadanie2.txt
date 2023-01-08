@@ -1,0 +1,2 @@
+Rozwiazanie nie jest jedynym mozliwym, moge wybrac inne wartosci dla CPIV i PCINT np. (150 i 100 000),
+albo moge przechowywac ilosc przepełnień CPIV w zmiennej i wtedy sprawdzać wystapienie flagi PITS w rejestrze PIT_SR lub wykorzystać wywoływane wtedy przerwanie

@@ -1,0 +1,1 @@
+Nie jest możliwe wykorzystanie innego prescalera, ponieważ zabraknie miejsca w rejestrze timera na zliczenia. Dla następnego prescalera = 128 to RC = 500 000, natomiast maksymalna jego pojemność to 65 535. Chyba że użyjemy zmiennej w programie do programowego zliczania więcej niż jednego cyklu timera jako części większego cyklu.
