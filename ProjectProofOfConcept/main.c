@@ -90,38 +90,38 @@ void discoverField(int row, int col){
     }
 
     if(!(field & isDiscovered) /*&& !(field & isFlagged)*/){    //This condition should be verified in user input part of code, on higher level
-        /*if((field & ~(isFlagged)) == 0){    //It should take flagged fields in mass discover
-            if(row != 0){
-                discoverField(row-1,col);   //TOP
-
-                if(col != 0){
-                    discoverField(row-1,col-1);   //TOP LEFT
-                }
-                if(col < cols-1){
-                    discoverField(row-1,col+1);   //TOP RIGHT
-                }
-            }
-
-            if(col != 0){
-                discoverField(row,col-1);   //LEFT
-            }
-            if(col < cols-1){
-                discoverField(row,col+1);   //RIGHT
-            }
-
-            if(row < rows-1){
-                discoverField(row+1,col);   //BOTTOM
-
-                if(col != 0){
-                    discoverField(row+1,col-1); //BOTTOM LEFT
-                }
-                if(col < cols-1){
-                    discoverField(row+1,col+1); //BOTTOM RIGHT
-                }
-            }
-        }*/
-
         fields[row][col] |= isDiscovered;
+
+        if((field & ~(isFlagged)) == 0) {    //It should take flagged fields in mass discover
+            if (row != 0) {
+                discoverField(row - 1, col);   //TOP
+
+                if (col != 0) {
+                    discoverField(row - 1, col - 1);   //TOP LEFT
+                }
+                if (col < cols - 1) {
+                    discoverField(row - 1, col + 1);   //TOP RIGHT
+                }
+            }
+
+            if (col != 0) {
+                discoverField(row, col - 1);   //LEFT
+            }
+            if (col < cols - 1) {
+                discoverField(row, col + 1);   //RIGHT
+            }
+
+            if (row < rows - 1) {
+                discoverField(row + 1, col);   //BOTTOM
+
+                if (col != 0) {
+                    discoverField(row + 1, col - 1); //BOTTOM LEFT
+                }
+                if (col < cols - 1) {
+                    discoverField(row + 1, col + 1); //BOTTOM RIGHT
+                }
+            }
+        }
     }
 }
 
@@ -189,7 +189,7 @@ void visualizeDiscoveredMap(){
 }
 
 int main() {
-    srand(time(NULL));
+    srand(0);
 
     generateMap();
     visualizeMap();
