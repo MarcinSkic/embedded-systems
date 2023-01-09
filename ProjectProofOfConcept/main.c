@@ -134,10 +134,13 @@ void visualizeMap(){
             }
 
             if(fields[i][x] & isDiscovered) {
+
                 if (fields[i][x] & isBomb) {
                     printf("B");
+                } else if(fields[i][x] & isFlagged){
+                    printf("F");
                 } else if ((fields[i][x] & ~(isDiscovered)) > 0) {
-                    printf("%d", (int) fields[i][x]);
+                    printf("%d", (int) (fields[i][x] & ~(isDiscovered)));
                 } else {
                     printf("-");
                 }
@@ -148,10 +151,41 @@ void visualizeMap(){
         printf("\n");
     }
 
-    for(int i = 0; i < rows; i++){
+    /*for(int i = 0; i < rows; i++){
         printf("\033[A");
     }
-    printf("\r");
+    printf("\r");*/
+
+    printf("\n\n\n");
+}
+
+void visualizeDiscoveredMap(){
+    for (int i = 0; i < rows; i++){
+        for(int x = 0; x < cols; x++){
+            if(i == cursorY && x == cursorX){
+                printf("o");
+                continue;
+            }
+
+            if (fields[i][x] & isBomb) {
+                printf("B");
+            } else if(fields[i][x] & isFlagged){
+                printf("F");
+            } else if ((fields[i][x] & ~(isDiscovered)) > 0) {
+                printf("%d", (int) (fields[i][x] & ~(isDiscovered)));
+            } else {
+                printf("-");
+            }
+        }
+        printf("\n");
+    }
+
+    /*for(int i = 0; i < rows; i++){
+        printf("\033[A");
+    }
+    printf("\r");*/
+
+    printf("\n\n\n");
 }
 
 int main() {
@@ -160,12 +194,49 @@ int main() {
     generateMap();
     visualizeMap();
 
-    /*while(gameState == pending){
-        fgetc(stdin);
-    }*/
+    while(gameState == pending){
+        char choice = fgetc(stdin);
 
-    discoverField(4,4);
+        switch (choice) {
+            case 'w':
+                if(cursorY != 0){
+                    cursorY--;
+                }
+                break;
+            case 's':
+                if(cursorY < rows-1){
+                    cursorY++;
+                }
+                break;
+            case 'a':
+                if(cursorX != 0){
+                    cursorX--;
+                }
+                break;
+            case 'd':
+                if(cursorX < cols-1) {
+                    cursorX++;
+                }
+                break;
+            case 'e':
+                if(!(fields[cursorY][cursorX] & isFlagged)) {
+                    discoverField(cursorY, cursorX);
+                }
+                break;
+            case 'q':
+                //flagfield
+                break;
+        }
 
-    visualizeMap();
+        fflush(stdin);
+        visualizeDiscoveredMap();
+        visualizeMap();
+    }
+
+    if(gameState & won){
+        printf("You WON!");
+    } else {
+        printf("You LOST!");
+    }
     return 0;
 }
