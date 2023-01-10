@@ -84,6 +84,15 @@ void generateMap(){
 void discoverField(int row, int col){
     enum fieldFlags field = fields[row][col];
 
+    if(gameState == gameOver){
+        return;
+    } else if(field & isBomb){
+
+        fields[row][col] |= isDiscovered;
+        gameState = gameOver;
+        return;
+    }
+
     if(field & isBomb || gameState == gameOver){
         gameState = gameOver;
         return;
@@ -122,63 +131,67 @@ void discoverField(int row, int col){
                 }
             }
         }
+
+        fields[row][col] &= ~(isFlagged);
+    }
+}
+
+void flagField(int row, int col){
+    if(!(fields[row][col] & isDiscovered)){
+        if(fields[row][col] & isFlagged){
+            fields[row][col] &= ~(isFlagged);
+        } else {
+            fields[row][col] |= isFlagged;
+        }
+    }
+}
+
+void showFieldSymbol(int i, int x, int ignoreFlags) {
+    if (i == cursorY && x == cursorX) {
+        printf("\033[0;31m");
+    }
+
+    if ((fields[i][x] & isDiscovered) || ignoreFlags) {
+
+        if (fields[i][x] & isBomb) {
+            printf("B");
+        } else if ((fields[i][x] & 0b1111) > 0) {   //0b1111 numbers field can have, from 0 to 8
+            printf("%d", (int) (fields[i][x] & 0b1111));
+        } else {
+            printf("-");
+        }
+    } else if(fields[i][x] & isFlagged) {
+        printf("F");
+    } else {
+        printf("_");
+    }
+
+    if(i == cursorY && x == cursorX){
+        printf("\033[0m");
     }
 }
 
 void visualizeMap(){
     for (int i = 0; i < rows; i++){
         for(int x = 0; x < cols; x++){
-            if(i == cursorY && x == cursorX){
-                printf("\033[0;31m");
-            }
-
-            if(fields[i][x] & isDiscovered) {
-
-                if (fields[i][x] & isBomb) {
-                    printf("B");
-                } else if(fields[i][x] & isFlagged){
-                    printf("F");
-                } else if ((fields[i][x] & ~(isDiscovered)) > 0) {
-                    printf("%d", (int) (fields[i][x] & ~(isDiscovered)));
-                } else {
-                    printf("-");
-                }
-            } else {
-                printf("_");
-            }
-
-            if(i == cursorY && x == cursorX){
-                printf("\033[0m");
-            }
+            showFieldSymbol(i,x,0);
         }
         printf("\n");
     }
 
+    //CODE FOR NORMAL CONSOLES, DOESN'T WORK IN CLION
     /*for(int i = 0; i < rows; i++){
         printf("\033[A");
     }
     printf("\r");*/
 
-    printf("\n\n\n");
+    printf("\n");
 }
 
 void visualizeDiscoveredMap(){
     for (int i = 0; i < rows; i++){
         for(int x = 0; x < cols; x++){
-            if(i == cursorY && x == cursorX){
-                printf("o");
-                continue;
-            }
-
-            if (fields[i][x] & isBomb) {
-                printf("B");
-            } else if(fields[i][x] & isFlagged){
-                printf("F");
-            } else if ((fields[i][x] & ~(isDiscovered)) > 0) {
-                printf("%d", (int) (fields[i][x] & ~(isDiscovered)));
-            } else {
-                printf("-");
-            }
+            showFieldSymbol(i,x,1);
         }
         printf("\n");
     }
@@ -192,54 +205,70 @@ void visualizeDiscoveredMap(){
 }
 
 int main() {
-    srand(0);
+    srand(time(NULL));
 
-    generateMap();
-    visualizeMap();
+    while(1){
 
-    while(gameState == pending){
-        char choice = fgetc(stdin);
+        generateMap();
+        visualizeDiscoveredMap();
 
-        switch (choice) {
-            case 'w':
-                if(cursorY != 0){
-                    cursorY--;
-                }
-                break;
-            case 's':
-                if(cursorY < rows-1){
-                    cursorY++;
-                }
-                break;
-            case 'a':
-                if(cursorX != 0){
-                    cursorX--;
-                }
-                break;
-            case 'd':
-                if(cursorX < cols-1) {
-                    cursorX++;
-                }
-                break;
-            case 'e':
-                if(!(fields[cursorY][cursorX] & isFlagged)) {
-                    discoverField(cursorY, cursorX);
-                }
-                break;
-            case 'q':
-                //flagfield
-                break;
+        while(gameState == pending){
+            visualizeMap();
+            char choice = fgetc(stdin);
+
+            switch (choice) {
+                case 'w':
+                    if(cursorY != 0){
+                        cursorY--;
+                    }
+                    break;
+                case 's':
+                    if(cursorY < rows-1){
+                        cursorY++;
+                    }
+                    break;
+                case 'a':
+                    if(cursorX != 0){
+                        cursorX--;
+                    }
+                    break;
+                case 'd':
+                    if(cursorX < cols-1) {
+                        cursorX++;
+                    }
+                    break;
+                case 'e':
+                    if(!(fields[cursorY][cursorX] & isFlagged)) {
+                        discoverField(cursorY, cursorX);
+                    }
+                    break;
+                case 'q':
+                    flagField(cursorY,cursorX);
+                    break;
+            }
+
+            fflush(stdin);
+            visualizeDiscoveredMap();
         }
 
-        fflush(stdin);
-        visualizeDiscoveredMap();
-        visualizeMap();
+        if(gameState & won){
+            printf("You WON!\n");
+        } else {
+            printf("You LOST!");
+        }
+
+        printf("Try again? [y/N]: ");
+        char choice = fgetc(stdin);
+        choice = fgetc(stdin);
+
+        if(choice == 'y'){
+            gameState = pending;
+            cursorX = 0;
+            cursorY = 0;
+        } else {
+            return 0;
+        }
     }
 
-    if(gameState & won){
-        printf("You WON!");
-    } else {
-        printf("You LOST!");
-    }
     return 0;
 }

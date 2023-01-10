@@ -116,7 +116,7 @@ void discoverField(int row, int col){
         fields[row][col] |= isDiscovered;
     
         if((field & ~(isFlagged)) == 0){    //It should take flagged fields in mass discover
-            /*if(row != 0){
+            if(row != 0){
                 discoverField(row-1,col);   //TOP
                 if(col != 0){
                     discoverField(row-1,col-1);   //TOP LEFT
@@ -139,7 +139,7 @@ void discoverField(int row, int col){
                 if(col < cols-1){
                     discoverField(row+1,col+1); //BOTTOM RIGHT
                 }
-            }*/
+            }
         }
 
         fields[row][col] &= ~(isFlagged);
