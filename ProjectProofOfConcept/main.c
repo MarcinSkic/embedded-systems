@@ -129,8 +129,7 @@ void visualizeMap(){
     for (int i = 0; i < rows; i++){
         for(int x = 0; x < cols; x++){
             if(i == cursorY && x == cursorX){
-                printf("o");
-                continue;
+                printf("\033[0;31m");
             }
 
             if(fields[i][x] & isDiscovered) {
@@ -146,6 +145,10 @@ void visualizeMap(){
                 }
             } else {
                 printf("_");
+            }
+
+            if(i == cursorY && x == cursorX){
+                printf("\033[0m");
             }
         }
         printf("\n");
