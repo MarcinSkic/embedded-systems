@@ -3,12 +3,12 @@
 #include <stdlib.h>
 
 int cursorX = 0, cursorY = 0;
-int visuals[8][8];
 
-enum fieldFlags {empty = 0,one = 1,isDiscovered = 0b0010000, isBomb = 0b0100000, isFlagged = 0b1000000};
+enum fieldFlags {isDiscovered = 0b0010000, isBomb = 0b0100000, isFlagged = 0b1000000};
 enum gameState {pending,won,gameOver};
 
 enum gameState gameState = pending;
+int fieldsLeftToClear = 0;
 int minesNumber = 10;
 int rows = 8;
 int cols = 8;
@@ -79,27 +79,30 @@ void generateMap(){
         fields[minePos/cols][minePos%cols] = isBomb;
         generateNumbers(minePos/cols,minePos%cols);
     }
+
+    fieldsLeftToClear = rows*cols - minesNumber;
 }
 
 void discoverField(int row, int col){
     enum fieldFlags field = fields[row][col];
 
-    if(gameState == gameOver){
+    if(gameState == gameOver || gameState == won){
         return;
     } else if(field & isBomb){
-
         fields[row][col] |= isDiscovered;
         gameState = gameOver;
         return;
     }
 
-    if(field & isBomb || gameState == gameOver){
-        gameState = gameOver;
-        return;
-    }
 
     if(!(field & isDiscovered) /*&& !(field & isFlagged)*/){    //This condition should be verified in user input part of code, on higher level
         fields[row][col] |= isDiscovered;
+        fieldsLeftToClear--;
+
+        if(fieldsLeftToClear == 0){
+            gameState = won;
+            return;
+        }
 
         if((field & ~(isFlagged)) == 0) {    //It should take flagged fields in mass discover
             if (row != 0) {
@@ -213,6 +216,7 @@ int main() {
         visualizeDiscoveredMap();
 
         while(gameState == pending){
+            printf("Pozostalo %d pol do odkrycia\n",fieldsLeftToClear);
             visualizeMap();
             char choice = fgetc(stdin);
 

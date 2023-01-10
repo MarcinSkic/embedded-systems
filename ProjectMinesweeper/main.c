@@ -10,7 +10,6 @@
 #define jCenter 0x00008000;
 
 int cursorX = 0, cursorY = 0;
-int visuals[8][8];
 
 enum fieldFlags {empty = 0,one = 1,isDiscovered = 0b0010000, isBomb = 0b0100000, isFlagged = 0b1000000};
 enum gameState {pending,won,gameOver};
