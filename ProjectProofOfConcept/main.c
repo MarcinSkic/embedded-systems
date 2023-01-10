@@ -161,7 +161,7 @@ void showFieldSymbol(int i, int x, int ignoreFlags) {
         } else if ((fields[i][x] & 0b1111) > 0) {   //0b1111 numbers field can have, from 0 to 8
             printf("%d", (int) (fields[i][x] & 0b1111));
         } else {
-            printf("-");
+            printf("|");
         }
     } else if(fields[i][x] & isFlagged) {
         printf("F");
@@ -187,8 +187,6 @@ void visualizeMap(){
         printf("\033[A");
     }
     printf("\r");*/
-
-    printf("\n");
 }
 
 void visualizeDiscoveredMap(){
@@ -209,69 +207,70 @@ void visualizeDiscoveredMap(){
 
 int main() {
     srand(time(NULL));
+    
+    generateMap();
+    visualizeDiscoveredMap();
 
-    while(1){
+    while(gameState == pending){
+        printf("%d undiscovered fields left\n",fieldsLeftToClear);
+        visualizeMap();
+        printf("Controls: wsad - cursor, e - discover, q - flag, c - cheat\n");
 
-        generateMap();
-        visualizeDiscoveredMap();
-
-        while(gameState == pending){
-            printf("Pozostalo %d pol do odkrycia\n",fieldsLeftToClear);
-            visualizeMap();
-            char choice = fgetc(stdin);
-
-            switch (choice) {
-                case 'w':
-                    if(cursorY != 0){
-                        cursorY--;
-                    }
-                    break;
-                case 's':
-                    if(cursorY < rows-1){
-                        cursorY++;
-                    }
-                    break;
-                case 'a':
-                    if(cursorX != 0){
-                        cursorX--;
-                    }
-                    break;
-                case 'd':
-                    if(cursorX < cols-1) {
-                        cursorX++;
-                    }
-                    break;
-                case 'e':
-                    if(!(fields[cursorY][cursorX] & isFlagged)) {
-                        discoverField(cursorY, cursorX);
-                    }
-                    break;
-                case 'q':
-                    flagField(cursorY,cursorX);
-                    break;
-            }
-
-            fflush(stdin);
-            visualizeDiscoveredMap();
-        }
-
-        if(gameState & won){
-            printf("You WON!\n");
-        } else {
-            printf("You LOST!");
-        }
-
-        printf("Try again? [y/N]: ");
         char choice = fgetc(stdin);
-        choice = fgetc(stdin);
+        getchar();
 
-        if(choice == 'y'){
-            gameState = pending;
-            cursorX = 0;
-            cursorY = 0;
-        } else {
-            return 0;
+        switch (choice) {
+            case 'w':
+                if(cursorY != 0){
+                    cursorY--;
+                } else {
+                    fflush(stdin);
+                }
+                break;
+            case 's':
+                if(cursorY < rows-1){
+                    cursorY++;
+                } else {
+                    fflush(stdin);
+                }
+                break;
+            case 'a':
+                if(cursorX != 0){
+                    cursorX--;
+                } else {
+                    fflush(stdin);
+                }
+                break;
+            case 'd':
+                if(cursorX < cols-1) {
+                    cursorX++;
+                } else {
+                    fflush(stdin);
+                }
+                break;
+            case 'e':
+                if(!(fields[cursorY][cursorX] & isFlagged)) {
+                    discoverField(cursorY, cursorX);
+                }
+                break;
+            case 'q':
+                flagField(cursorY,cursorX);
+                break;
+            case 'c':
+                visualizeDiscoveredMap();
+                break;
+            default:
+                printf("Incorrect input\n");
+                break;
         }
+    }
+
+    visualizeDiscoveredMap();
+
+    if(gameState & won){
+        printf("You WON!\n");
+    } else {
+        printf("You LOST!");
     }
 
     return 0;
