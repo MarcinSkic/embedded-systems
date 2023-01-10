@@ -112,6 +112,9 @@ void discoverField(int row, int col){
     }
 
     if(!(field & isDiscovered)){
+        
+        fields[row][col] |= isDiscovered;
+    
         if((field & ~(isFlagged)) == 0){    //It should take flagged fields in mass discover
             /*if(row != 0){
                 discoverField(row-1,col);   //TOP
@@ -140,7 +143,6 @@ void discoverField(int row, int col){
         }
 
         fields[row][col] &= ~(isFlagged);
-        fields[row][col] |= isDiscovered;
         LCDSetRect(row*16+2,col*16+2,(row+1)*16,(col+1)*16,FILL,WHITE);
         showFieldSymbol(row,col,0);
     }
