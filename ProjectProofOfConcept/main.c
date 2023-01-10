@@ -9,11 +9,11 @@ enum gameState {pending,won,gameOver};
 
 enum gameState gameState = pending;
 int fieldsLeftToClear = 0;
-int minesNumber = 10;
-int rows = 8;
-int cols = 8;
+int minesNumber = 40;
+int rows = 16;
+int cols = 16;
 
-enum fieldFlags fields[8][8];   //rows, cols
+enum fieldFlags fields[16][16];   //rows, cols
 
 void generateNumbers(int row,int col){
     if(row != 0){
@@ -151,27 +151,64 @@ void flagField(int row, int col){
 
 void showFieldSymbol(int i, int x, int ignoreFlags) {
     if (i == cursorY && x == cursorX) {
-        printf("\033[0;31m");
+        printf("\033[1;33m");
     }
 
     if ((fields[i][x] & isDiscovered) || ignoreFlags) {
 
         if (fields[i][x] & isBomb) {
+            printf("\033[1;30m");
             printf("B");
         } else if ((fields[i][x] & 0b1111) > 0) {   //0b1111 numbers field can have, from 0 to 8
-            printf("%d", (int) (fields[i][x] & 0b1111));
+            int number = (int) fields[i][x] & 0b1111;
+            if(!(i == cursorY && x == cursorX)){
+                switch (number) {
+                    case 1:
+                        printf("\033[0;34m");
+                        break;
+                    case 2:
+                        printf("\033[0;32m");
+                        break;
+                    case 3:
+                        printf("\033[1;31m");
+                        break;
+                    case 4:
+                        printf("\033[1;34m");
+                        break;
+                    case 5:
+                        printf("\033[0;31m");
+                        break;
+                    case 6:
+                        printf("\033[0;36m");
+                        break;
+                    case 7:
+                        printf("\033[0;35m");
+                        break;
+                    case 8:
+                        printf("\033[0;37m");
+                        break;
+                }
+            }
+            printf("%d", number);
         } else {
-            printf("|");
+            if(!(i == cursorY && x == cursorX)){
+                printf(" ");
+            } else {
+                printf("_");
+            }
+
         }
     } else if(fields[i][x] & isFlagged) {
+        if(!(i == cursorY && x == cursorX)) {
+            printf("\033[1;30m");
+        }
         printf("F");
     } else {
-        printf("_");
+        printf("|");
     }
 
-    if(i == cursorY && x == cursorX){
-        printf("\033[0m");
-    }
+    printf("\033[0m");
+
 }
 
 void visualizeMap(){
@@ -207,7 +244,7 @@ void visualizeDiscoveredMap(){
 
 int main() {
     srand(time(NULL));
-    
+
     generateMap();
     visualizeDiscoveredMap();
 
